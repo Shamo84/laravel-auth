@@ -18,7 +18,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+      $posts = Post::where("user_id", Auth::id())->get();
+      return view("admin.posts.index", compact("posts"));
     }
 
     /**
@@ -28,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+          return view("admin.posts.create");
     }
 
     /**
@@ -39,7 +40,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $data = $request->all();
+      $newPost = new Post;
+      $newPost->fill($data);
+      $newPost->user_id = Auth::id();
+      $newPost->slug = str::slug($newPost->title) . rand(1, 1000);
+      $saved = $newPost->save();
+
+      if (!$saved) {
+        abort("404");
+      }
+
+      return redirect()->route("admin.posts.index");
     }
 
     /**
