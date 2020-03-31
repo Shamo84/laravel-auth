@@ -15,8 +15,10 @@
                     @endif
 
                     You are logged in!
+
                 </div>
             </div>
+            <a href="{{route("admin.posts.index")}}" class="btn btn-primary mt-5">POSTS</a>
         </div>
     </div>
 </div>
