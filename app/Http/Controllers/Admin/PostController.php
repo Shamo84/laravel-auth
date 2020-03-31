@@ -29,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-          return view("admin.posts.create");
+      return view("admin.posts.create");
     }
 
     /**
@@ -60,9 +60,10 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
-        //
+      $post = Post::where("slug", $slug)->first();
+      return view("admin.posts.show", compact("post"));
     }
 
     /**
@@ -73,7 +74,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+      return view("admin.posts.edit", compact("post"));
     }
 
     /**
@@ -85,7 +86,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+      $data = $request->all();
+      $post->fill($data);
+      $updated = $post->update();
+
+      if (!$updated) {
+        return redirect()->back()->withInput();
+      }
+
+      return redirect()->route("admin.posts.show", $post->slug);
     }
 
     /**
@@ -96,6 +105,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+      $post->delete();
+      return redirect()->route("admin.posts.index");
     }
 }
