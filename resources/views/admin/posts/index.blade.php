@@ -8,6 +8,9 @@
           <div class="post">
             <h2><a href="{{route("admin.posts.show", $post->slug)}}">{{$post->title}}</a></h2>
             <p>{{$post->content}}</p>
+            @foreach ($post->tags as $tag)
+              <span>{{$tag->name}} </span>
+            @endforeach
           </div>
         @endforeach
       </div>
