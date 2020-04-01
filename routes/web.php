@@ -26,6 +26,7 @@ Auth::routes();
 
 Route::name('admin.')->prefix('admin')->namespace('Admin')->middleware('auth')
 ->group(function() {
+    Route::delete('/comments/{comment}', 'CommentController@destroy')->name('comments.destroy');
     Route::resource('posts','PostController');
     //rotta commenti admin
 });

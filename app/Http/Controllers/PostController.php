@@ -57,9 +57,8 @@ class PostController extends Controller
       }
       $post = Post::where("id", $data["post_id"])->first();
       $slug = $post->slug;
-      return redirect()->route("posts.show", $slug);
-
-
+      // return redirect()->route("posts.show", $slug);
+      return redirect()->back();
 
       // $newComment = new Comment;
     }

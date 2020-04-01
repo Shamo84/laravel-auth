@@ -32,7 +32,7 @@
                 </div>
               </div>
               <div class="col-2 mx-auto">
-                <form class="mb-4 float-right" action="{{route("admin.posts.destroy", compact("post"))}}" method="post">
+                <form class="mb-4 float-right" action="{{route("admin.comments.destroy", compact("comment"))}}" method="post">
                   @method("DELETE")
                   @csrf
                   <input type="submit" class="btn btn-danger btn-sm" value="DELETE">
