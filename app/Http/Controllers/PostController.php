@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,7 +15,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+      $posts = Post::all();
+      $tags = Tag::all();
+      $data = [
+        "posts" => $posts,
+        "tags" => $tags
+      ];
+      return view("guest.posts.index", $data);
     }
 
     /**
@@ -35,7 +42,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $data = $request->all();
+      dd($data);
+      // $newComment = new Comment;
     }
 
     /**
@@ -44,9 +53,10 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
-        //
+      $post = Post::where("slug", $slug)->first();
+      return view("guest.posts.show", compact("post"));
     }
 
     /**

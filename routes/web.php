@@ -18,12 +18,14 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', 'PostController@index')->name('posts.index');
+Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
+Route::post('/posts', 'PostController@store')->name('posts.store');
 
+Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::name('admin.')->prefix('admin')->namespace('Admin')->middleware('auth')
 ->group(function() {
-    Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('posts','PostController');
     //rotta commenti admin
 });
