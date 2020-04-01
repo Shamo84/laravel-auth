@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <a href="{{route("admin.posts.create")}}" class="btn btn-primary mb-3">NEW POST</a>
+        <a href="{{route("admin.posts.create")}}" class="btn btn-primary form-control mb-3">NEW POST</a>
         @foreach ($posts as $post)
           <div class="post mb-4">
             <h2><a href="{{route("admin.posts.show", $post->slug)}}">{{$post->title}}</a></h2>

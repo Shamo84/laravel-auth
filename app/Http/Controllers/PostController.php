@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Tag;
+use App\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -15,6 +17,9 @@ class PostController extends Controller
      */
     public function index()
     {
+      if (Auth::user()) {
+        return redirect()->route("admin.posts.index");
+      }
       $posts = Post::all();
       $tags = Tag::all();
       $data = [
@@ -43,7 +48,19 @@ class PostController extends Controller
     public function store(Request $request)
     {
       $data = $request->all();
-      dd($data);
+      $newComment = new Comment;
+      $newComment->fill($data);
+      $saved = $newComment->save();
+
+      if (!$saved) {
+        abort("404");
+      }
+      $post = Post::where("id", $data["post_id"])->first();
+      $slug = $post->slug;
+      return redirect()->route("posts.show", $slug);
+
+
+
       // $newComment = new Comment;
     }
 
@@ -56,7 +73,14 @@ class PostController extends Controller
     public function show($slug)
     {
       $post = Post::where("slug", $slug)->first();
-      return view("guest.posts.show", compact("post"));
+      $comments = Comment::where("post_id", $post->id)->get();
+
+      $data = [
+        "post" => $post,
+        "comments" => $comments
+      ];
+
+      return view("guest.posts.show", $data);
     }
 
     /**

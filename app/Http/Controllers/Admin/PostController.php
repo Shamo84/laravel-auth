@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Post;
 use App\Tag;
+use App\Comment;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -67,7 +69,15 @@ class PostController extends Controller
     public function show($slug)
     {
       $post = Post::where("slug", $slug)->first();
-      return view("admin.posts.show", compact("post"));
+
+      $comments = Comment::where("post_id", $post->id)->get();
+
+      $data = [
+        "post" => $post,
+        "comments" => $comments
+      ];
+
+      return view("admin.posts.show", $data);
     }
 
     /**
