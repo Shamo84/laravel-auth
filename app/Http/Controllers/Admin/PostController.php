@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+
 
 class PostController extends Controller
 {
@@ -21,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-      $posts = Post::where("user_id", Auth::id())->get();
+      $posts = Post::all();
       return view("admin.posts.index", compact("posts"));
     }
 
@@ -45,10 +47,12 @@ class PostController extends Controller
     public function store(Request $request)
     {
       $data = $request->all();
+      $path = Storage::disk('public')->putFile('images', $request->file('image_path'));
       $newPost = new Post;
       $newPost->fill($data);
       $newPost->user_id = Auth::id();
       $newPost->slug = str::slug($newPost->title) . rand(1, 1000);
+      $newPost->image_path = $path;
       $saved = $newPost->save();
       if (!$saved) {
         return redirect()->back()->withInput();
@@ -57,7 +61,7 @@ class PostController extends Controller
         $tags = $data["tags"];
         $newPost->tags()->attach($tags);
       }
-      return redirect()->route("admin.posts.index");
+      return redirect()->route("admin.posts.show", $newPost->slug);
     }
 
     /**

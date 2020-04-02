@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-12">
         <div class="post mb-4">
-
+          <img src="{{asset('storage/' . $post->image_path)}}" alt="image">
           <h2>{{$post->title}}</h2>
           <p>{{$post->content}}</p>
           <p>Author: {{$post->user->name}}</p>
@@ -14,13 +14,15 @@
           @foreach ($post->tags as $tag)
             <span class="btn btn-warning">{{$tag->name}} </span>
           @endforeach
-          <form class="mt-5" action="{{route("admin.posts.destroy", compact("post"))}}" method="post">
-            <a href="{{route("admin.posts.edit", compact("post"))}}" class="btn btn-primary btn-lg">EDIT</a>
-            @method("DELETE")
-            @csrf
-            <input type="submit" class="btn btn-danger btn-lg" value="DELETE">
-            <a class="btn btn-primary float-right" href="{{route("admin.posts.index")}}">BACK</a>
-          </form>
+          @if ($post->user_id == Auth::id())
+            <form class="mt-5" action="{{route("admin.posts.destroy", compact("post"))}}" method="post">
+              <a href="{{route("admin.posts.edit", compact("post"))}}" class="btn btn-primary btn-lg">EDIT</a>
+              @method("DELETE")
+              @csrf
+              <input type="submit" class="btn btn-danger btn-lg" value="DELETE">
+              <a class="btn btn-primary float-right" href="{{route("admin.posts.index")}}">BACK</a>
+            </form>
+          @endif
           <h3 class="mt-5">Comments:</h3>
           <div class="row mt-4">
             @foreach ($comments as $comment)

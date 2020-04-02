@@ -4,6 +4,7 @@ use App\Post;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use Carbon\Carbon;
+use App\user;
 
 
 class PostSeeder extends Seeder
@@ -15,9 +16,9 @@ class PostSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-      for ($i=0; $i < 4; $i++) {
+      for ($i=0; $i < 5; $i++) {
         $newPost = new Post;
-        $newPost->user_id = 1;
+        $newPost->user_id = User::inRandomOrder()->first()->id;
         $newPost->title = $faker->realText($maxNbChars = 20, $indexSize = 2);
         $newPost->content = $faker->realText($maxNbChars = 200, $indexSize = 2);
         $newPost->slug = Str::slug($newPost->title) . rand(1, 1000);

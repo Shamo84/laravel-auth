@@ -4,6 +4,7 @@
     <div class="row">
       <div class="col-12">
         <div class="post mb-4">
+          <img src="{{asset('storage/' . $post->image_path)}}" alt="image">
           <h2>{{$post->title}}</h2>
           <p>{{$post->content}}</p>
           @foreach ($post->tags as $tag)

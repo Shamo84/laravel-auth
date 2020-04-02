@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <form class="" action="{{route("admin.posts.store")}}" method="post">
+        <form class="" action="{{route("admin.posts.store")}}" method="post" enctype="multipart/form-data">
           @method("POST")
           @csrf
           <div class="form-group">
@@ -20,6 +20,7 @@
 
             </div>
           </div>
+          <input type="file" name="image_path" accept="image/*">
           <button class="form-control btn btn-primary" type="submit">Submit</button>
         </form>
       </div>

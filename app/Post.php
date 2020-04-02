@@ -11,7 +11,8 @@ class Post extends Model
     "title",
     "content",
     "slug",
-    "updated_at"
+    "updated_at",
+    "image_path"
   ];
 
   public function user()
