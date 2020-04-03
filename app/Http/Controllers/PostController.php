@@ -7,6 +7,8 @@ use App\Tag;
 use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\SendNewMail;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -55,6 +57,7 @@ class PostController extends Controller
       if (!$saved) {
         abort("404");
       }
+      Mail::to('mail@mail.it')->send(new SendNewMail($newComment));
       $post = Post::where("id", $data["post_id"])->first();
       $slug = $post->slug;
       // return redirect()->route("posts.show", $slug);

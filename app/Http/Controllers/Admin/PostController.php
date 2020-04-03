@@ -47,12 +47,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
       $data = $request->all();
-      $path = Storage::disk('public')->putFile('images', $request->file('image_path'));
+      if ($request->file('image_path')) {
+        $path = Storage::disk('public')->putFile('images', $request->file('image_path'));
+        $newPost->image_path = $path;
+      }
       $newPost = new Post;
       $newPost->fill($data);
       $newPost->user_id = Auth::id();
       $newPost->slug = str::slug($newPost->title) . rand(1, 1000);
-      $newPost->image_path = $path;
       $saved = $newPost->save();
       if (!$saved) {
         return redirect()->back()->withInput();
