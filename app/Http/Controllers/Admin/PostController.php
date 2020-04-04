@@ -16,6 +16,16 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    private $validationRules;
+
+    public function __construct()
+    {
+      $this->validationRules = [
+        "title" => "required|string|max:60",
+        "content" => "required|string|max:255",
+        "image_path" => "nullable|image"
+      ];
+    }
     /**
      * Display a listing of the resource.
      *
@@ -46,6 +56,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+      $request->validate($this->validationRules);
       $data = $request->all();
       if ($request->file('image_path')) {
         $path = Storage::disk('public')->putFile('images', $request->file('image_path'));
@@ -110,6 +121,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+      $request->validate($this->validationRules);
       $data = $request->all();
       $post->fill($data);
       if (isset($data["img-del"])) {

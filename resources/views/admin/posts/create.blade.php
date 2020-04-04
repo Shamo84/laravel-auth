@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+  @endif
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -9,7 +18,7 @@
           @csrf
           <div class="form-group">
             <label for="title">TITLE</label>
-            <input class="form-control" type="text" name="title" value="" placeholder="">
+            <input class="form-control" type="text" name="title" value="{{old("title")}}" placeholder="">
             <label for="content">TEXT</label>
             <textarea class="form-control mb-4" name="content" rows="8" cols="80"></textarea>
             <div class="btn btn-warning">

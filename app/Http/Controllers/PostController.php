@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
+  private $validationRules;
+
+  public function __construct()
+  {
+    $this->validationRules = [
+      "name" => "required|string|max:60",
+      "email" => "required|email|max:60",
+      "text" => "required|string|max:255"
+    ];
+  }
     /**
      * Display a listing of the resource.
      *
@@ -49,6 +59,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+      $request->validate($this->validationRules);
       $data = $request->all();
       $newComment = new Comment;
       $newComment->fill($data);

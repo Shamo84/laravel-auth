@@ -24,9 +24,9 @@
               @method("DELETE")
               @csrf
               <input type="submit" class="btn btn-danger btn-lg" value="DELETE">
-              <a class="btn btn-primary float-right" href="{{route("admin.posts.index")}}">BACK</a>
             </form>
           @endif
+          <a class="btn btn-primary float-right" href="{{route("admin.posts.index")}}">BACK</a>
           <h3 class="mt-5">Comments:</h3>
           <div class="row mt-4">
             @foreach ($comments as $comment)

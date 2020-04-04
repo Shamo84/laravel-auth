@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('content')
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+  @endif
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -28,11 +37,11 @@
 
                 <div class="form-group">
                   <label for="name">Name</label>
-                  <input type="text" class="form-control" name="name" placeholder="your name">
+                  <input type="text" class="form-control" name="name" value="{{old("name")}}" placeholder="your name">
                 </div>
                 <div class="form-group">
                   <label for="email">Email address</label>
-                  <input type="email" class="form-control" name="email" placeholder="email@example.com">
+                  <input type="email" class="form-control" name="email" value="{{old("email")}}" placeholder="email@example.com">
                 </div>
                 <div class="form-group">
                   <label for="text">Text</label>
