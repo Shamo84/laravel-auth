@@ -21,7 +21,7 @@
             </div>
           </div>
           <input type="file" name="image_path" accept="image/*">
-          <button class="form-control btn btn-primary" type="submit">Submit</button>
+          <button class="mt-4 form-control btn btn-primary" type="submit">Submit</button>
         </form>
       </div>
     </div>

@@ -4,10 +4,19 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <form class="" action="{{route("admin.posts.update", compact("post"))}}" method="post">
+        <div class="row">
+          <div class="col-4">
+            <img class="img-fluid" src="{{asset('storage/' . $post->image_path)}}" alt="">
+          </div>
+        </div>
+        <form class="" action="{{route("admin.posts.update", compact("post"))}}" method="post" enctype="multipart/form-data">
           @method("PATCH")
           @csrf
           <div class="form-group">
+            @if (!empty($post->image_path))
+              <label for="img-del">delete image</label>
+              <input type="checkbox" name="img-del" value="true"><br>
+            @endif
             <label for="title">TITLE</label>
             <input class="form-control" type="text" name="title" value="{{$post->title}}" placeholder="">
             <label for="content">TEXT</label>
@@ -17,7 +26,8 @@
               <label for="">{{$tag->name}}</label>
             @endforeach
           </div>
-          <button class="form-control btn btn-primary" type="submit">Submit</button>
+          <input type="file" name="image_path" accept="image/*" src="">
+          <button class="mt-4 form-control btn btn-primary" type="submit">Submit</button>
         </form>
       </div>
     </div>

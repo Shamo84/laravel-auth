@@ -112,6 +112,13 @@ class PostController extends Controller
     {
       $data = $request->all();
       $post->fill($data);
+      if (isset($data["img-del"])) {
+        $post->image_path = "";
+      }
+      if ($request->file('image_path')) {
+        $path = Storage::disk('public')->putFile('images', $request->file('image_path'));
+        $post->image_path = $path;
+      }
       $updated = $post->update();
       $tags = [];
       if (isset($data["tags"])) {

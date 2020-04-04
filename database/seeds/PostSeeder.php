@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use Carbon\Carbon;
 use App\user;
+use Illuminate\Support\Str;
 
 
 class PostSeeder extends Seeder
