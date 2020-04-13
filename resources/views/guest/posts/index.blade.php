@@ -3,6 +3,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
+        <h1>Post</h1>
         @foreach ($posts as $post)
           <div class="post mb-4">
             <h2><a href="{{route("posts.show", $post->slug)}}">{{$post->title}}</a></h2>
